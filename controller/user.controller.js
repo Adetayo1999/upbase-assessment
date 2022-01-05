@@ -7,8 +7,13 @@ exports.getUserDetails = async (req, res) => {
     const user = await User.findById(req.id);
 
     if (!user) throw new Error("User does not exist in our database");
-
-    res.send(user);
+    const avatar = user.userImage
+      ? `${process.env.BASEURL}/api/user/${user.id}/avatar`
+      : null;
+    res.send({
+      user,
+      avatar,
+    });
   } catch (err) {
     res.status(404).send({
       error: err.message,
