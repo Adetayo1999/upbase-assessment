@@ -68,3 +68,31 @@ exports.changePassword = async (req, res) => {
     res.status(400).send({ error: err.message });
   }
 };
+
+exports.updateUserProfile = async (req, res) => {
+  const { about, firstName, lastName } = req.body;
+
+  try {
+    const user = await User.findById(req.id);
+
+    if (about && about !== user.about) {
+      user.about = about;
+    }
+
+    if (firstName && firstName !== user.firstName) {
+      user.firstName = firstName;
+    }
+
+    if (lastName && lastName !== user.lastName) {
+      user.lastName = lastName;
+    }
+
+    await user.save();
+
+    res.send({
+      message: "User Profile Updated",
+    });
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+};

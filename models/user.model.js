@@ -27,6 +27,9 @@ const userSchema = new Schema(
     userImage: {
       type: Buffer,
     },
+    about: {
+      type: String,
+    },
   },
   {
     timestamps: true,
